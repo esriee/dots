@@ -1,6 +1,6 @@
 import os
 import subprocess
-
+import json
 from libqtile import hook, layout, bar
 from libqtile.config import EzKey as Key, EzClick as Click, EzDrag as Drag, Group, Match, Screen
 from libqtile.lazy import lazy
@@ -8,28 +8,50 @@ from libqtile.lazy import lazy
 from qtile_extras import widget
 from qtile_extras.widget.decorations import BorderDecoration, RectDecoration, PowerLineDecoration
 
+#from modules._volume import Volume
 
 from dataclasses import dataclass
 
-# Start flavours
+with open("/home/es/.cache/wal/colors.json") as f:
+    wal_colors = json.load(f)
 @dataclass(frozen=True)
 class Colors:
-    transparent = '#00000000'
-    background  = '#1e1e2e'
-    foreground  = '#cdd6f4'
+    transparent = wal_colors['colors']['color0']
+    background  = wal_colors['colors']['color0']
+    foreground  = wal_colors['special']['foreground']
+    
+    black       = wal_colors['colors']['color0']
+    red         = wal_colors['colors']['color1']
+    green       = wal_colors['colors']['color2']
+    yellow      = wal_colors['colors']['color3']
+    blue        = wal_colors['colors']['color4']
+    magenta     = wal_colors['colors']['color5']
+    cyan        = wal_colors['colors']['color6']
+    white       = wal_colors['colors']['color7']
+    gray        = wal_colors['colors']['color8']
+    graylight   = wal_colors['colors']['color9']
 
-    black       = '#1e1e2e'
-    red         = '#f38ba8'
-    green       = '#a6e3a1'
-    yellow      = '#f9e2af'
-    blue        = '#89b4fa'
-    magenta     = '#f5c2e7'
-    cyan        = '#94e2d5'
-    white       = '#cdd6f4'
-    gray        = '#585b70'
-    graylight   = '#6c7086'
+palette = Colors() 
 
-palette = Colors()
+# Start flavours
+#@dataclass(frozen=True)
+#class Colors:
+#    transparent = '#00000000'
+#    background  = '#1e1e2e'
+#    foreground  = '#cdd6f4'
+#
+#    black       = '#1e1e2e'
+#    red         = '#f38ba8'
+#    green       = '#a6e3a1'
+#    yellow      = '#f9e2af'
+#    blue        = '#89b4fa'
+#    magenta     = '#f5c2e7'
+#    cyan        = '#94e2d5'
+#    white       = '#cdd6f4'
+#    gray        = '#585b70'
+#    graylight   = '#6c7086'
+#
+#palette = Colors()
 # End flavours
 #
 #class Colors:
@@ -75,9 +97,9 @@ widget_list=[
     widget.TextBox(
         text="  󰣇   ",
         foreground=palette.blue, 
-        font=prefs.font, fontsize=18,
+        font=prefs.font, fontsize=13,
         mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(prefs.launcher)},
-        margin=6, decorations=[rectdeco(palette.graylight,prefs.corner)]
+        margin=6, borderwidth=1, decorations=[rectdeco(palette.graylight,prefs.corner)]
     ),
     widget.GroupBox(  
         this_current_screen_border=palette.blue, 
@@ -124,18 +146,17 @@ widget_list=[
 
 def group(group_labels):
     group = []
-    group_names = ["1", "2", "3", "4", "5"]
+    group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     for i in range(len(group_names)):
         group.append(Group(name=group_names[i], label=group_labels[i]))
     return group
 
-groups = group(["󰎤", "󰎧", "󰎪", "󰎭", "󰎱"])
-
+groups = group(["󰎤", "󰎧", "󰎪", "󰎭", "󰎱", "󰎳", "󰎸", "󰎻", "󰎼"])
 
 def init_layout_theme():
     return {
         "border_width"      :   0,
-        "margin"            :   6,
+        "margin"            :   15,
         "border_focus"      :   [palette.background],
         "border_normal"     :   [palette.background],
         "grow_amount"       :   5,
