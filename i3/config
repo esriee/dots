@@ -1,6 +1,6 @@
 exec_always --no-startup-id autotiling
 set $mod Mod4
-font pango:SF Pro Text Bold 10
+font pango:Monospace Bold 9
 
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
@@ -15,7 +15,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
-
+exec --no-startup-id 'nitrogen --restore'
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -30,10 +30,10 @@ tiling_drag modifier titlebar
 # kill focused window
 bindsym $mod+q kill
 
-bindsym $mod+Return exec --no-startup-id alacritty
+bindsym $mod+Return exec --no-startup-id kitty 
 
 
-bindsym $mod+p exec --no-startup-id rofi -show run
+bindsym $mod+p exec --no-startup-id dmenu_run 
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
@@ -54,7 +54,7 @@ bindsym $mod+Shift+semicolon move right
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Right move right 
 
 # vertical orientation
 bindsym $mod+v split v
@@ -91,6 +91,12 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+
+
+workspace_auto_back_and_forth yes
+
+
+
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -119,6 +125,12 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+c reload
 # restart i3 
 bindsym $mod+Shift+r restart
+
+bindsym $mod+Shift+v exec "kitty -e pulsemixer > /dev/null 2>&1"
+bindsym $mod+Shift+d exec "tdl"
+bindsym $mod+x exec 'dmenu-win'
+bindsym $mod+Shift+f exec "kitty -e yazi > /dev/null 2>&1"
+
 # exit i3
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
@@ -150,7 +162,7 @@ bindsym $mod+r mode "resize"
 
 #Catppuccin
 
-client.focused          #292d3e #292d3e #eceff4 #292d3e   #292d3e
+client.focused          #000000 #000000  #eceff4 #292d3e   #292d3e
 #client.focused_inactive #292d3e #292d3e #eceff4 #3b4252   #3b4252
 #client.unfocused        #292d3e #292d3e #a3be8c #3b4252   #3b4252
 #client.urgent           #3b4252 #3b4252 #eceff4 #3b4252   #3b4252
@@ -160,17 +172,18 @@ client.focused          #292d3e #292d3e #eceff4 #292d3e   #292d3e
 
 #Gruvbox
 
-client.focused          #282828 #282828 #ebdbb2 #282828   #282828
-client.focused_inactive #282828 #282828 #a89984 #3c3836   #3c3836
-client.unfocused        #282828 #282828 #928374 #3c3836   #3c3836
-client.urgent           #3c3836 #3c3836 #fb4934 #3c3836   #3c3836
-client.placeholder      #3c3836 #3c3836 #a89984 #3c3836   #3c3836
+#client.focused          #282828 #282828 #ebdbb2 #282828   #282828
+#client.focused_inactive #282828 #282828 #a89984 #3c3836   #3c3836
+#client.unfocused        #282828 #282828 #928374 #3c3836   #3c3836
+#client.urgent           #3c3836 #3c3836 #fb4934 #3c3836   #3c3836
+#client.placeholder      #3c3836 #3c3836 #a89984 #3c3836   #3c3836
 
 client.background       #282828
 
 
 
-gaps inner 9
+gaps inner 0
+gaps outer 0
 #smart_gaps on
 #smart_borders on
 
@@ -179,4 +192,5 @@ default_border none
 
 #default_border none
 default_floating_border none
+
 
